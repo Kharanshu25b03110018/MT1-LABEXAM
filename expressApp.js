@@ -152,6 +152,26 @@ app.put('/foods/:id', (req, res) => {
   });
 });
 
+// B5: DELETE - Remove a food item
+app.delete('/foods/:id', (req, res) => {
+  const foodId = Number(req.params.id);
+
+  const foodIndex = foods.findIndex(item => item.id === foodId);
+
+  if (foodIndex === -1) {
+    return res.status(404).json({
+      message: 'Food item not found'
+    });
+  }
+
+  const deletedFood = foods.splice(foodIndex, 1);
+
+  res.status(200).json({
+    message: 'Food item deleted successfully',
+    food: deletedFood[0]
+  });
+});
+
 app.listen(4000, () => {
     console.log('Express Server running at http://localhost:4000');
 });
