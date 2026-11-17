@@ -33,6 +33,34 @@ let foods = [
 ];
 
 // Start Express server
+
+// B2.1: GET all food items
+app.get('/foods', (req, res) => {
+    res.status(200).json({
+        message: 'Food items retrieved successfully',
+        foods: foods
+    });
+});
+
+// B2.2: GET food item by ID
+app.get('/foods/:id', (req, res) => {
+
+    const foodId = Number(req.params.id);
+
+    const food = foods.find(item => item.id === foodId);
+
+    if (!food) {
+        return res.status(404).json({
+            message: 'Food item not found'
+        });
+    }
+
+    res.status(200).json({
+        message: 'Food item retrieved successfully',
+        food: food
+    });
+});
+
 app.listen(4000, () => {
     console.log('Express Server running at http://localhost:4000');
 });
