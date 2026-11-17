@@ -107,6 +107,50 @@ app.post('/foods', (req, res) => {
 
 });
 
+// B4: PUT - Update an existing food item
+app.put('/foods/:id', (req, res) => {
+  const foodId = Number(req.params.id);
+
+  const foodIndex = foods.findIndex(item => item.id === foodId);
+
+  if (foodIndex === -1) {
+    return res.status(404).json({
+      message: 'Food item not found'
+    });
+  }
+
+  const { foodName, category, price, availability } = req.body;
+
+  if (
+    !foodName ||
+    !category ||
+    price === undefined ||
+    availability === undefined
+  ) {
+    return res.status(400).json({
+      message: 'All food fields are required'
+    });
+  }
+
+  if (typeof price !== 'number' || !Number.isFinite(price) || price <= 0) {
+    return res.status(400).json({
+      message: 'Price must be a positive number'
+    });
+  }
+
+  foods[foodIndex] = {
+    id: foodId,
+    foodName,
+    category,
+    price,
+    availability
+  };
+
+  res.status(200).json({
+    message: 'Food item updated successfully',
+    food: foods[foodIndex]
+  });
+});
 
 app.listen(4000, () => {
     console.log('Express Server running at http://localhost:4000');
