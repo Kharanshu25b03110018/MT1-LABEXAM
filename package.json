@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "index.js",
+ "main": "httpServer.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:http": "node httpServer.js",
+    "start:express": "node expressApp.js"
   },
   "keywords": [],
   "author": "",
