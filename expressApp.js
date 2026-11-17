@@ -61,6 +61,53 @@ app.get('/foods/:id', (req, res) => {
     });
 });
 
+
+// B3: POST - Add a new food item
+app.post('/foods', (req, res) => {
+
+    const { id, foodName, category, price, availability } = req.body;
+
+    // Check required fields
+    if (
+        id === undefined ||
+        !foodName ||
+        !category ||
+        price === undefined ||
+        availability === undefined
+    ) {
+        return res.status(400).json({
+            message: 'All fields are required'
+        });
+    }
+
+    // Validate price
+    if (typeof price !== 'number' || !Number.isFinite(price) || price <= 0) {
+        return res.status(400).json({
+            message: 'Price must be a positive number'
+        });
+    }
+
+    // Create new food object
+    const newFood = {
+        id,
+        foodName,
+        category,
+        price,
+        availability
+    };
+
+    // Add food to array
+    foods.push(newFood);
+
+    // Send success response
+    res.status(201).json({
+        message: 'Food item added successfully',
+        food: newFood
+    });
+
+});
+
+
 app.listen(4000, () => {
     console.log('Express Server running at http://localhost:4000');
 });
