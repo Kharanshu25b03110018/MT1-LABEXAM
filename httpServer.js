@@ -58,15 +58,21 @@ const server = http.createServer((req, res) => {
 
         fs.readFile('./public/menu.html', 'utf8', (err, data) => {
 
-            if (err) {
-                res.writeHead(500, { 'Content-Type': 'text/plain' });
-                res.end('Unable to load menu file');
-                return;
-            }
-
-            res.writeHead(200, { 'Content-Type': 'text/html' });
-            res.end(data);
+    if (err) {
+        res.writeHead(500, {
+            'Content-Type': 'text/plain'
         });
+
+        res.end('Unable to load menu file');
+        return;
+    }
+
+    res.writeHead(200, {
+        'Content-Type': 'text/html'
+    });
+
+    res.end(data);
+});
     }
 
     // Route 5: POST new food
